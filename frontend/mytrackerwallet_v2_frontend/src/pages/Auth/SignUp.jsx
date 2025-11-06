@@ -67,7 +67,7 @@ const SignUp = () => {
     setErrors(newErrors)
     
     if (Object.keys(newErrors).length === 0) {
-      // Handle signup logic here
+      // Sign Up API Call
       console.log('Sign Up:', formData, profilePicture)
     }
   }
