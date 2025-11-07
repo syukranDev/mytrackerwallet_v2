@@ -3,7 +3,7 @@ import DashboardLayout from '../../components/layouts/DashboardLayout'
 
 const Expense = () => {
   return (
-    <DashboardLayout>
+    <DashboardLayout activeMenu='/expense'>
       <div>Expense</div>
     </DashboardLayout>
   )

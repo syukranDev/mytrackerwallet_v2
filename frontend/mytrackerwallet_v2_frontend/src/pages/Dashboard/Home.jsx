@@ -34,7 +34,7 @@ const Home = () => {
   }, [])
 
   return (
-    <DashboardLayout>
+    <DashboardLayout activeMenu='/dashboard'>
       <div className="my-5 mx-auto">
         Home 
       </div>
