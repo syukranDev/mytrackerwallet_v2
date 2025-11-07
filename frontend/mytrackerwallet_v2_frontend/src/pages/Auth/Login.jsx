@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import AuthLayout from '../../components/layouts/AuthLayout'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import axiosInstance from '../../utils/axiosInstance'
 import { API_PATH } from '../../utils/apiPaths'
+import { UserContext } from '../../context/userContext.jsx'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -13,6 +14,9 @@ const Login = () => {
   })
   const [showPassword, setShowPassword] = useState(false)
   const [errors, setErrors] = useState({})
+
+  const { updateUser } = useContext(UserContext);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -57,7 +61,7 @@ const Login = () => {
 
       if (token) { 
         localStorage.setItem('token', token)
-        localStorage.setItem('user', JSON.stringify(user))
+        updateUser(user)
         navigate('/dashboard')
       } else {
         setErrors({
