@@ -22,6 +22,6 @@ export const API_PATH = {
         DOWNLOAD_EXPENSE_EXCEL: '/api/v1/expense/downloadExpenseExcel',
     },
     IMAGE: {
-        UPLOAD_IMAGE: '/api/v1/images/uploadImage',
+        UPLOAD_IMAGE: '/api/v1/auth/uploadProfileImage',
     },
 }

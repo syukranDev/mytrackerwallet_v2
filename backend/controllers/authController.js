@@ -8,21 +8,21 @@ const generateToken = (id) => {
 }
 
 exports.registerUser = async (req, res) => {
-    const { fullName, email, password } = req.body
+    const { fullName, email, password, profileImageUrl } = req.body
 
     if (!fullName || !email || !password) {
-        return res.status(400).json({ message: 'All fields are required' })
+        return res.status(401).json({ message: 'All fields are required' })
     }
 
     try { 
         const userExists = await db.users.findOne({ where: { email } })
     
         if (userExists) {
-            return res.status(400).json({ message: 'User already exists' })
+            return res.status(401).json({ message: 'User already exists' })
         }
     
         const hashedPassword = await bcrypt.hash(password, 10)
-        const user = await db.users.create({ id: uuidv4(), fullName, email, password: hashedPassword })
+        const user = await db.users.create({ id: uuidv4(), fullName, email, password: hashedPassword, profileImageUrl: profileImageUrl || null })
 
         res.status(201).json({
             user,

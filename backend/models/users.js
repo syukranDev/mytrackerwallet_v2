@@ -18,7 +18,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false
       },
       profileImageUrl:{
-        type: Sequelize.DECIMAL,
+        type: Sequelize.TEXT,
         allowNull: true,
       },
       createdAt:{

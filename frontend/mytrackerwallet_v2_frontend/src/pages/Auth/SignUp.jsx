@@ -2,8 +2,15 @@ import React, { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import AuthLayout from '../../components/layouts/AuthLayout'
 import { FaEye, FaEyeSlash, FaUser, FaUpload } from 'react-icons/fa'
+import axiosInstance from '../../utils/axiosInstance'
+import { API_PATH } from '../../utils/apiPaths'
+import { UserContext } from '../../context/userContext'
+import { useContext } from 'react'
+import { uploadImage } from '../../utils/UploadImage'
+import { useNavigate } from 'react-router-dom'
 
 const SignUp = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -13,6 +20,8 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [errors, setErrors] = useState({})
   const fileInputRef = useRef(null)
+
+  const { updateUser } = useContext(UserContext)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -47,9 +56,11 @@ const SignUp = () => {
     fileInputRef.current?.click()
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const newErrors = {}
+
+    let profilePictureUrl = ''
     
     if (!formData.fullName.trim()) {
       newErrors.fullName = 'Please enter your name'
@@ -64,12 +75,57 @@ const SignUp = () => {
       newErrors.password = 'Password must be at least 8 characters'
     }
     
-    setErrors(newErrors)
-    
-    if (Object.keys(newErrors).length === 0) {
-      // Sign Up API Call
-      console.log('Sign Up:', formData, profilePicture)
+    // Set all errors at once and return early if validation fails
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
     }
+
+    setErrors({});
+
+    console.log(formData)
+
+    try {
+
+      if (profilePicture) {
+        const imgUploadResponse = await uploadImage(profilePicture)
+        formData.profileImageUrl = imgUploadResponse.imageUrl || ''
+      }
+
+      const response = await axiosInstance.post(API_PATH.AUTH.REGISTER, formData)
+      console.log('Sign Up response:', response.data)
+
+      const { token, user } = response.data
+
+      if (token) { 
+        localStorage.setItem('token', token)
+        updateUser(user)
+        navigate('/dashboard')
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+
+      if (error.response?.status === 401) {
+        setErrors({
+          generic: error.response.data?.message || 'An error occurred during sign up',
+        })
+        return
+      }
+
+      console.log(error)
+      
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message || 'An error occurred during sign up'
+        setErrors({
+          generic: errorMessage,
+        })
+      } else {
+        setErrors({
+          generic: 'An error occurred during login. Please try again later.',
+        })
+      }
+    }
+
   }
 
   return (
@@ -181,6 +237,10 @@ const SignUp = () => {
               <p className="text-red-500 text-xs mt-0.5">{errors.password}</p>
             )}
           </div>
+
+          {errors.generic && (
+            <p className="text-red-500 text-xs mt-0.5">{errors.generic}</p>
+          )}
 
           <button
             type="submit"
