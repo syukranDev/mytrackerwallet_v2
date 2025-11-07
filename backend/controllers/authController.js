@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 const { v4: uuidv4 } = require('uuid')
 
 const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30m' })
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1h' })
 }
 
 exports.registerUser = async (req, res) => {

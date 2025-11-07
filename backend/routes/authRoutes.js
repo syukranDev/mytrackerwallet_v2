@@ -13,7 +13,7 @@ router.post('/register', registerUser)
 router.post('/login', loginUser)
 router.get('/getUser', verifyToken, getUserInfo)
 
-router.post('/uploadProfileImage',upload.single('image'), (req,res) => {
+router.post('/uploadProfileImage',upload.single('profileImage'), (req,res) => {
    if(!req.file) return res.status(400).json({ message: 'No file uploaded' })
 
    const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
