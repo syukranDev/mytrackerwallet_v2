@@ -1,8 +1,11 @@
+const db = require('../config/db.js')
+const xlsx = require('xlsx')
+
 exports.addExpense = async (req, res) => {
     const userId = req.token.id
     const { icon, category, amount } = req.body
-
-    if (!userId || !icon || !category || !amount) {
+    
+    if (!icon || !category || !amount) {
         return res.status(400).json({ message: 'All fields are required' })
     }
 
