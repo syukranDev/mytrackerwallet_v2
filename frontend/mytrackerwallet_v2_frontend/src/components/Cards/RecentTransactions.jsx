@@ -19,7 +19,7 @@ const RecentTransactions = ({ transactions = [], seeMore }) => {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 col-span-1 md:col-span-3">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 col-span-1 md:col-span-2">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-gray-800">Recent Transactions</h3>
         {seeMore && (

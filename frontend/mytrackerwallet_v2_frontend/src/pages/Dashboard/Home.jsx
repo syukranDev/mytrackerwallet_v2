@@ -9,6 +9,7 @@ import InfoCard from '../../components/Cards/InfoCard'
 import { addThousandSeparator } from '../../utils/helper'
 import { LuTrendingUp, LuTrendingDown, LuWallet } from 'react-icons/lu'
 import RecentTransactions from '../../components/Cards/RecentTransactions'
+import PieChart from '../../components/Cards/PieChart'
 
 const Home = () => {
   useUserAuth()
@@ -22,7 +23,6 @@ const Home = () => {
       setLoading(true)
       const response = await axiosInstance.get(API_PATH.DASHBOARD.GET_DASHBOARD_DATA)
       
-      console.log(response.data)
       if (response.data) {
         setDashboardData(response.data)
       }
@@ -35,6 +35,8 @@ const Home = () => {
 
   useEffect(() => {
     fetchDashboardData()
+
+    console.log(dashboardData)
   }, [])
 
   return (
@@ -66,7 +68,85 @@ const Home = () => {
             transactions={dashboardData?.recentTransactions || []}
             seeMore={() => navigate('/expense')}
           />
-          
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 col-span-1 md:col-span-1 flex flex-col">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800">Finance Overview</h3>
+                <p className="text-xs text-gray-500">Income vs Expense split</p>
+              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-[11px] font-medium text-primary">
+                Live
+              </span>
+            </div>
+
+            <div className="flex-1">
+              <PieChart 
+                value={[
+                  { name: 'Income', value: dashboardData?.totalIncome },
+                  { name: 'Expense', value: dashboardData?.totalExpense },
+                  { name: 'Balance', value: dashboardData?.totalBalance },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 col-span-1 md:col-span-1 flex flex-col">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800">Finance Overview</h3>
+                <p className="text-xs text-gray-500">Income vs Expense split</p>
+              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-[11px] font-medium text-primary">
+                Live
+              </span>
+            </div>
+
+            <div className="flex-1">
+              <PieChart 
+                value={[
+                  { name: 'Income', value: dashboardData?.totalIncome },
+                ]}
+              />
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 col-span-1 md:col-span-1 flex flex-col">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800">Finance Overview</h3>
+                {/* <p className="text-xs text-gray-500">Income vs Expense split</p> */}
+              </div>
+            </div>
+
+            <div className="flex-1">
+              <p>TBA</p>
+              {/* <PieChart 
+                value={[
+                  { name: 'Income', value: dashboardData?.totalIncome },
+                  { name: 'Expense', value: dashboardData?.totalExpense },
+                  { name: 'Balance', value: dashboardData?.totalBalance },
+                ]}
+              /> */}
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 col-span-1 md:col-span-1 flex flex-col">
+            <div className="flex-1">
+              <p>TBA</p>
+              {/* <PieChart 
+                value={[
+                  { name: 'Income', value: dashboardData?.totalIncome },
+                  { name: 'Expense', value: dashboardData?.totalExpense },
+                  { name: 'Balance', value: dashboardData?.totalBalance },
+                ]}
+              /> */}
+            </div>
+          </div>
+
         </div>
       </div>
     </DashboardLayout>
