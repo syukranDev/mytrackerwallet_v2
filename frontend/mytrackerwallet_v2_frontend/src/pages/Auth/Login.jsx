@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AuthLayout from '../../components/layouts/AuthLayout'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import axiosInstance from '../../utils/axiosInstance'
+import { API_PATH } from '../../utils/apiPaths'
 
 const Login = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -26,7 +29,7 @@ const Login = () => {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const newErrors = {}
     
@@ -37,11 +40,50 @@ const Login = () => {
       newErrors.password = 'Please enter your password'
     }
     
-    setErrors(newErrors)
-    
-    if (Object.keys(newErrors).length === 0) {
-      // Handle login logic here
-      console.log('Login:', formData)
+    // Set all errors at once and return early if validation fails
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+
+    setErrors({});
+
+    try {
+      const response = await axiosInstance.post(API_PATH.AUTH.LOGIN, formData)
+
+      console.log('Login response:', response.data)
+
+      const { token, user } = response.data
+
+      if (token) { 
+        localStorage.setItem('token', token)
+        localStorage.setItem('user', JSON.stringify(user))
+        navigate('/dashboard')
+      } else {
+        setErrors({
+          generic: 'Login failed: No token received',
+        })
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+
+      if (error.response?.status === 401) {
+        setErrors({
+          generic: error.response.data?.message || 'Invalid email or password',
+        })
+        return
+      }
+      
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data.message || 'An error occurred during login'
+        setErrors({
+          generic: errorMessage,
+        })
+      } else {
+        setErrors({
+          generic: 'An error occurred during login. Please try again later.',
+        })
+      }
     }
   }
 
@@ -102,6 +144,10 @@ const Login = () => {
               <p className="text-red-500 text-xs mt-0.5">{errors.password}</p>
             )}
           </div>
+
+          {errors.generic && (
+            <p className="text-red-500 text-xs mt-0.5">{errors.generic}</p>
+          )}
 
           <button
             type="submit"
