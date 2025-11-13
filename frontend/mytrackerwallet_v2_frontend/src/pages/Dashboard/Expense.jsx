@@ -40,10 +40,12 @@ const Expense = () => {
   const [loading, setLoading] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+  const [destinations, setDestinations] = useState([])
   const [formData, setFormData] = useState({
     icon: '💸',
     amount: '',
-    category: ''
+    category: '',
+    source: ''
   })
 
   // Fetch all expenses
@@ -67,8 +69,22 @@ const Expense = () => {
     }
   }
 
+  // Fetch all income destinations (used as sources for expenses)
+  const fetchDestinations = async () => {
+    try {
+      const response = await axiosInstance.get(API_PATH.INCOME.DESTINATIONS.GET_ALL)
+      if (response.data && response.data.destinations) {
+        setDestinations(response.data.destinations)
+      }
+    } catch (error) {
+      console.error('Error fetching destinations:', error)
+      toast.error(error.response?.data?.message || 'Failed to fetch destinations')
+    }
+  }
+
   useEffect(() => {
     fetchExpenses()
+    fetchDestinations()
   }, [])
 
   // Close emoji picker when clicking outside
@@ -115,8 +131,8 @@ const Expense = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!formData.amount || !formData.category) {
-      toast.error('Please fill in all fields')
+    if (!formData.amount || !formData.category || !formData.source) {
+      toast.error('Please fill in all fields including source')
       return
     }
 
@@ -130,7 +146,8 @@ const Expense = () => {
       const response = await axiosInstance.post(API_PATH.EXPENSE.ADD_EXPENSE, {
         icon: formData.icon,
         amount: Number(formData.amount),
-        category: formData.category
+        category: formData.category,
+        source: formData.source
       })
 
       if (response.data) {
@@ -138,7 +155,8 @@ const Expense = () => {
         setFormData({
           icon: '💸',
           amount: '',
-          category: ''
+          category: '',
+          source: ''
         })
         fetchExpenses()
       }
@@ -238,7 +256,17 @@ const Expense = () => {
           {/* Add Expense Form */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Add New Expense</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            {destinations.length === 0 ? (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                <p className="text-sm text-yellow-800 font-medium mb-2">
+                  No income destinations found
+                </p>
+                <p className="text-xs text-yellow-700">
+                  Please add at least one destination in the <strong>Income</strong> page before adding expenses. Expenses must use a source from your income destinations.
+                </p>
+              </div>
+            ) : null}
+            <form onSubmit={handleSubmit} className="space-y-4" style={{ opacity: destinations.length === 0 ? 0.5 : 1, pointerEvents: destinations.length === 0 ? 'none' : 'auto' }}>
               {/* Icon Picker */}
               <div className="relative emoji-picker-wrapper">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -299,10 +327,33 @@ const Expense = () => {
                 />
               </div>
 
+              {/* Source Input */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Source <span className="text-red-500">*</span>
+                  <span className="text-xs text-gray-500 ml-2">(from Income destinations)</span>
+                </label>
+                <select
+                  name="source"
+                  value={formData.source}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all duration-200"
+                  required
+                  disabled={destinations.length === 0}
+                >
+                  <option value="">Select source</option>
+                  {destinations.map((destination) => (
+                    <option key={destination.id} value={destination.name}>
+                      {destination.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               {/* Submit Button */}
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={submitting || destinations.length === 0}
                 className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200 shadow-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <LuPlus className="text-lg" />
@@ -344,9 +395,19 @@ const Expense = () => {
                         <p className="font-semibold text-gray-800 truncate">
                           {expense.category}
                         </p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {formatDateTime(expense.created_at)}
-                        </p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <p className="text-xs text-gray-500">
+                            {formatDateTime(expense.created_at)}
+                          </p>
+                          {expense.source && (
+                            <>
+                              <span className="text-xs text-gray-400">•</span>
+                              <p className="text-xs text-red-600 font-medium">
+                                From: {expense.source}
+                              </p>
+                            </>
+                          )}
+                        </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">

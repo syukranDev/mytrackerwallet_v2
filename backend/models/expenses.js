@@ -10,6 +10,10 @@ module.exports = (sequelize, Sequelize) => {
     category: {
       type: Sequelize.TEXT
     },
+    source: {
+      type: Sequelize.TEXT,
+      allowNull: true
+    },
     amount: {
       type: Sequelize.DECIMAL
     },

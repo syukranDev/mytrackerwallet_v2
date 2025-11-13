@@ -30,7 +30,7 @@ const AuthLayout = ({children}) => {
     <div className="flex h-screen overflow-hidden">
       {/* Left Section - Form */}
       <div className="w-full md:w-[60%] lg:w-[55%] h-screen px-8 md:px-12 py-6 bg-white flex flex-col">
-        <h2 className="text-lg font-medium text-black mb-2">Expense Tracker</h2>
+        <h2 className="text-lg font-medium text-black mb-2">MyWalletTracker</h2>
         <div className="flex-1 flex items-center">
           {children}
         </div>
