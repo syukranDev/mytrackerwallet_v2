@@ -265,12 +265,12 @@ const Income = () => {
         {/* Header Section */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">Income Management</h1>
-            <p className="text-sm text-gray-500 mt-1">Track and manage your income sources</p>
+            <h1 className="text-2xl font-bold text-slate-800">Income Management</h1>
+            <p className="text-sm text-slate-500 mt-1">Track and manage your income sources</p>
           </div>
           <button
             onClick={handleDownloadExcel}
-            className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 shadow-sm"
+            className="flex items-center gap-2 px-4 py-2 bg-slate-500 text-white rounded-lg hover:bg-slate-600 transition-colors duration-200 shadow-sm"
             disabled={incomeCount === 0}
           >
             <LuDownload className="text-lg" />
@@ -284,7 +284,7 @@ const Income = () => {
             icon={<LuTrendingUp />}
             label="Total Income"
             value={addThousandSeparator(totalIncome.toFixed(2))}
-            color="bg-green-500"
+            color="bg-slate-500"
           />
           <InfoCard
             icon={<LuDollarSign />}
@@ -296,29 +296,29 @@ const Income = () => {
             icon={<LuCalendar />}
             label="Average Income"
             value={addThousandSeparator(averageIncome.toFixed(2))}
-            color="bg-blue-500"
+            color="bg-slate-400"
           />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Add Income Form */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Add New Income</h2>
+          <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">Add New Income</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Icon Picker */}
               <div className="relative emoji-picker-wrapper">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Icon
                 </label>
                 <div className="flex items-center gap-3">
                   <button
                     type="button"
                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                    className="w-16 h-16 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-3xl transition-colors duration-200 border-2 border-gray-200"
+                    className="w-16 h-16 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-3xl transition-colors duration-200 border-2 border-slate-200"
                   >
                     {formData.icon}
                   </button>
-                  <p className="text-sm text-gray-500">Click to change icon</p>
+                  <p className="text-sm text-slate-500">Click to change icon</p>
                 </div>
                 {showEmojiPicker && (
                   <div className="absolute z-10 mt-2 emoji-picker-wrapper">
@@ -333,8 +333,8 @@ const Income = () => {
 
               {/* Source Input */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Source <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Source <span className="text-slate-600">*</span>
                 </label>
                 <input
                   type="text"
@@ -342,15 +342,15 @@ const Income = () => {
                   value={formData.source}
                   onChange={handleInputChange}
                   placeholder="e.g., Salary, Freelance, Investment"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all duration-200"
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none transition-all duration-200"
                   required
                 />
               </div>
 
               {/* Amount Input */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Amount <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Amount <span className="text-slate-600">*</span>
                 </label>
                 <input
                   type="number"
@@ -360,7 +360,7 @@ const Income = () => {
                   placeholder="0.00"
                   step="0.01"
                   min="0"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all duration-200"
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none transition-all duration-200"
                   required
                 />
               </div>
@@ -368,13 +368,13 @@ const Income = () => {
               {/* To (Destination) Input */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-slate-700">
                     To (Destination)
                   </label>
                   <button
                     type="button"
                     onClick={() => setShowDestinationModal(true)}
-                    className="flex items-center gap-1 text-xs text-green-600 hover:text-green-700 font-medium"
+                    className="flex items-center gap-1 text-xs text-slate-600 hover:text-slate-700 font-medium"
                   >
                     <LuSettings className="text-sm cursor-pointer" />
                     <span className='cursor-pointer'>Manage</span>
@@ -384,7 +384,7 @@ const Income = () => {
                   name="to"
                   value={formData.to}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all duration-200"
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none transition-all duration-200"
                 >
                   <option value="">Select destination (optional)</option>
                   {destinations.map((dest) => (
@@ -399,7 +399,7 @@ const Income = () => {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 shadow-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-slate-500 text-white rounded-lg hover:bg-slate-600 transition-colors duration-200 shadow-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <LuPlus className="text-lg" />
                 <span>{submitting ? 'Adding...' : 'Add Income'}</span>
@@ -408,46 +408,46 @@ const Income = () => {
           </div>
 
           {/* Income List */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">
               Income History ({incomeCount})
             </h2>
             
             {loading ? (
               <div className="flex items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-500"></div>
               </div>
             ) : incomes.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-                  <LuTrendingUp className="text-2xl text-gray-400" />
+                <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+                  <LuTrendingUp className="text-2xl text-slate-400" />
                 </div>
-                <p className="text-gray-500 font-medium">No income records yet</p>
-                <p className="text-sm text-gray-400 mt-1">Add your first income to get started</p>
+                <p className="text-slate-500 font-medium">No income records yet</p>
+                <p className="text-sm text-slate-400 mt-1">Add your first income to get started</p>
               </div>
             ) : (
               <div className="space-y-3 max-h-[600px] overflow-y-auto">
                 {incomes.map((income) => (
                   <div
                     key={income.id}
-                    className="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50 transition-colors duration-200 border border-gray-100"
+                    className="flex items-center justify-between p-4 rounded-lg hover:bg-slate-50 transition-colors duration-200 border border-slate-100"
                   >
                     <div className="flex items-center gap-4 flex-1 min-w-0">
-                      <div className="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center text-2xl shrink-0">
+                      <div className="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center text-2xl shrink-0">
                         {income.icon || '💰'}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-gray-800 truncate">
+                        <p className="font-semibold text-slate-800 truncate">
                           {income.source}
                         </p>
                         <div className="flex items-center gap-2 mt-1">
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-slate-500">
                             {formatDateTime(income.created_at)}
                           </p>
                           {income.to && (
                             <>
-                              <span className="text-xs text-gray-400">•</span>
-                              <p className="text-xs text-green-600 font-medium">
+                              <span className="text-xs text-slate-400">•</span>
+                              <p className="text-xs text-slate-600 font-medium">
                                 To: {income.to}
                               </p>
                             </>
@@ -456,12 +456,12 @@ const Income = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
-                      <span className="text-base font-semibold text-green-600 whitespace-nowrap">
+                      <span className="text-base font-semibold text-slate-600 whitespace-nowrap">
                         +{addThousandSeparator(Number(income.amount || 0).toFixed(2))}
                       </span>
                       <button
                         onClick={() => handleDelete(income.id)}
-                        className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors duration-200"
+                        className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors duration-200"
                         title="Delete income"
                       >
                         <LuTrash2 className="text-lg" />

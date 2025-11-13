@@ -41,21 +41,21 @@ const SideMenu = ({ activeMenu }) => {
     }
 
     return (
-        <div className='w-64 h-[calc(100vh-61px)] bg-white border-r border-gray-200/50 p-5 sticky top-[61px] z-20 overflow-y-auto'>
+        <div className='w-64 h-[calc(100vh-61px)] bg-white border-r border-slate-200/50 p-5 sticky top-[61px] z-20 overflow-y-auto'>
             <div className='flex flex-col items-center gap-3 mt-3 mb-10'>
                 { user?.profileImageUrl ? (
                     <img 
                         src={user?.profileImageUrl} 
                         alt="Profile" 
-                        className='w-16 h-16 rounded-full object-cover border-2 border-gray-200' 
+                        className='w-16 h-16 rounded-full object-cover border-2 border-slate-200' 
                     />
                 ) : (
-                    <div className='w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center border-2 border-gray-200'>
-                        <FaUser className='w-8 h-8 text-gray-400' />
+                    <div className='w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center border-2 border-slate-200'>
+                        <FaUser className='w-8 h-8 text-slate-400' />
                     </div>
                 )}
 
-                <h5 className='text-base font-medium text-gray-800 text-center'>{user?.fullName ?? 'User'}</h5>
+                <h5 className='text-base font-medium text-slate-800 text-center'>{user?.fullName ?? 'User'}</h5>
             </div>
 
             <div className='flex flex-col gap-2'>
@@ -75,7 +75,7 @@ const SideMenu = ({ activeMenu }) => {
                                     ${
                                         active 
                                             ? 'text-white bg-primary shadow-md' 
-                                            : 'text-gray-700 hover:bg-gray-100 hover:text-primary'
+                                            : 'text-slate-700 hover:bg-slate-100 hover:text-primary'
                                     }
                                 `}
                             >

@@ -4,7 +4,7 @@
 @theme {
     --font-display: 'Poppins', 'sans-serif';
     --breakpoint-3xl: 1920px;
-    --color-primary: #875cf5;
+    --color-primary: #475569;
 }
 
 @layer base {
@@ -13,7 +13,7 @@
     }
 
     body {
-       background-color: #fcfbfc; 
+       background-color: #f8fafc; 
        overflow-x: hidden;
     }
 }

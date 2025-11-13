@@ -50,13 +50,13 @@ const DestinationManagementModal = ({
   return (
     <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl shadow-lg max-w-md w-full max-h-[80vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-800">
+        <div className="flex items-center justify-between p-6 border-b border-slate-200">
+          <h3 className="text-lg font-semibold text-slate-800">
             Manage Destinations
           </h3>
           <button
             onClick={handleClose}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer"
+            className="p-2 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
           >
             <LuX className="text-lg" />
           </button>
@@ -71,12 +71,12 @@ const DestinationManagementModal = ({
                 value={destinationFormData.name}
                 onChange={(e) => setDestinationFormData({ name: e.target.value })}
                 placeholder="e.g., Bank A, Investment Bank, Savings"
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none"
                 required
               />
               <button
                 type="submit"
-                className="cursor-pointer px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                className="cursor-pointer px-4 py-2 bg-slate-500 text-white rounded-lg hover:bg-slate-600 transition-colors"
               >
                 {editingDestination ? <LuAirplay /> : <LuPlus />}
               </button>
@@ -85,33 +85,33 @@ const DestinationManagementModal = ({
 
           {/* Destinations List */}
           <div className="space-y-2">
-            <p className="text-sm font-medium text-gray-700 mb-3">
+            <p className="text-sm font-medium text-slate-700 mb-3">
               Existing Destinations ({destinations.length})
             </p>
             {destinations.length === 0 ? (
-              <p className="text-sm text-gray-500 text-center py-4">
+              <p className="text-sm text-slate-500 text-center py-4">
                 No destinations yet. Add one above.
               </p>
             ) : (
               destinations.map((dest) => (
                 <div
                   key={dest.id}
-                  className="flex items-center justify-between p-3 rounded-lg border border-gray-200 hover:bg-gray-50"
+                  className="flex items-center justify-between p-3 rounded-lg border border-slate-200 hover:bg-slate-50"
                 >
-                  <span className="text-sm font-medium text-gray-800">
+                  <span className="text-sm font-medium text-slate-800">
                     {dest.name}
                   </span>
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => handleEditClick(dest)}
-                      className="p-1.5 text-blue-500 hover:bg-blue-50 rounded transition-colors cursor-pointer"
+                      className="p-1.5 text-slate-500 hover:bg-slate-100 rounded transition-colors cursor-pointer"
                       title="Edit"
                     >
                       <LuAirplay className="text-sm" />
                     </button>
                     <button
                       onClick={() => handleDeleteClick(dest.id)}
-                      className="p-1.5 text-red-500 hover:bg-red-50 rounded transition-colors cursor-pointer"
+                      className="p-1.5 text-slate-600 hover:bg-slate-100 rounded transition-colors cursor-pointer"
                       title="Delete"
                     >
                       <LuTrash2 className="text-sm" />

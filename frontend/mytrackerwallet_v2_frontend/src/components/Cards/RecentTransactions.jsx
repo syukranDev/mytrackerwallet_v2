@@ -19,9 +19,9 @@ const RecentTransactions = ({ transactions = [], seeMore }) => {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 col-span-1 md:col-span-2">
+    <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 col-span-1 md:col-span-2">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-800">Recent Transactions</h3>
+        <h3 className="text-lg font-semibold text-slate-800">Recent Transactions</h3>
         {seeMore && (
           <button
             onClick={seeMore}
@@ -35,7 +35,7 @@ const RecentTransactions = ({ transactions = [], seeMore }) => {
 
       <div className="space-y-3">
         {transactions.length === 0 ? (
-          <div className="text-center py-8 text-gray-400">
+          <div className="text-center py-8 text-slate-400">
             <p>No recent transactions</p>
           </div>
         ) : (
@@ -46,31 +46,31 @@ const RecentTransactions = ({ transactions = [], seeMore }) => {
             return (
               <div
                 key={transaction.id || index}
-                className="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50 transition-colors duration-200 border border-gray-100"
+                className="flex items-center justify-between p-4 rounded-lg hover:bg-slate-50 transition-colors duration-200 border border-slate-100"
               >
                 <div className="flex items-center gap-4 flex-1">
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                    isIncome ? 'bg-green-100' : 'bg-red-100'
+                    isIncome ? 'bg-slate-100' : 'bg-slate-200'
                   }`}>
                     {isIncome ? (
-                      <LuTrendingUp className={`text-lg ${isIncome ? 'text-green-600' : 'text-red-600'}`} />
+                      <LuTrendingUp className={`text-lg ${isIncome ? 'text-slate-600' : 'text-slate-700'}`} />
                     ) : (
-                      <LuTrendingDown className="text-lg text-red-600" />
+                      <LuTrendingDown className="text-lg text-slate-700" />
                     )}
                   </div>
                   
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-gray-800 truncate">
+                    <p className="font-medium text-slate-800 truncate">
                       {getTransactionLabel(transaction)}
                     </p>
                     <div className="flex items-center gap-2 mt-1">
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-slate-500">
                         {formatDate(transaction.created_at)}
                       </p>
                       {isIncome && transaction.to && (
                         <>
-                          <span className="text-xs text-gray-400">•</span>
-                          <p className="text-xs text-green-600 font-medium">To: {transaction.to}</p>
+                          <span className="text-xs text-slate-400">•</span>
+                          <p className="text-xs text-slate-600 font-medium">To: {transaction.to}</p>
                         </>
                       )}
                     </div>
@@ -79,7 +79,7 @@ const RecentTransactions = ({ transactions = [], seeMore }) => {
 
                 <div className="text-right">
                   <p className={`font-semibold ${
-                    isIncome ? 'text-green-600 bg-green-500/10 px-2 py-1 rounded-md' : 'text-red-600 bg-red-500/10 px-2 py-1 rounded-md'
+                    isIncome ? 'text-slate-600 bg-slate-500/10 px-2 py-1 rounded-md' : 'text-slate-700 bg-slate-600/10 px-2 py-1 rounded-md'
                   }`}>
                     {isIncome ? '+' : '-'}{addThousandSeparator(transaction.amount || 0)}
                   </p>

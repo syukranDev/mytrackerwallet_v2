@@ -75,13 +75,13 @@ const Home = () => {
             icon={<LuTrendingUp />}
             label="Total Income"
             value={addThousandSeparator(totalIncome)}
-            color="bg-green-500"
+            color="bg-slate-500"
           />
           <InfoCard
             icon={<LuTrendingDown />}
             label="Total Expense"
             value={addThousandSeparator(totalExpense)}
-            color="bg-red-500"
+            color="bg-slate-600"
           />
         </div>
 
@@ -90,11 +90,11 @@ const Home = () => {
             transactions={dashboardData?.recentTransactions || []}
             seeMore={() => navigate('/expense')}
           />
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 col-span-1 md:col-span-1 flex flex-col">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 col-span-1 md:col-span-1 flex flex-col">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="text-lg font-semibold text-gray-800">Finance Overview</h3>
-                <p className="text-xs text-gray-500">Income vs Expense split</p>
+                <h3 className="text-lg font-semibold text-slate-800">Finance Overview</h3>
+                <p className="text-xs text-slate-500">Income vs Expense split</p>
               </div>
               <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-[11px] font-medium text-primary">
                 Live
@@ -112,13 +112,13 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 col-span-1 md:col-span-1 flex flex-col">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 col-span-1 md:col-span-1 flex flex-col">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="text-lg font-semibold text-gray-800">Expense Breakdown</h3>
-                <p className="text-xs text-gray-500">Top categories (30 days)</p>
+                <h3 className="text-lg font-semibold text-slate-800">Expense Breakdown</h3>
+                <p className="text-xs text-slate-500">Top categories (30 days)</p>
               </div>
-              <span className="inline-flex items-center gap-1 rounded-full bg-red-500/10 px-3 py-1 text-[11px] font-medium text-red-500">
+              <span className="inline-flex items-center gap-1 rounded-full bg-slate-600/10 px-3 py-1 text-[11px] font-medium text-slate-600">
                 {expenseCount30Days} txns
               </span>
             </div>
@@ -127,36 +127,36 @@ const Home = () => {
               {topExpenseCategories.length > 0 ? (
                 topExpenseCategories.map(({ category, amount, percentage }) => (
                   <div key={category} className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-red-500/10 text-red-600 flex items-center justify-center text-sm font-semibold">
+                    <div className="h-10 w-10 rounded-lg bg-slate-600/10 text-red-600 flex items-center justify-center text-sm font-semibold">
                       {category.substring(0, 2).toUpperCase()}
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <p className="text-sm font-semibold text-gray-700">{category}</p>
-                        <span className="text-sm font-medium text-gray-500">{percentage}%</span>
+                        <p className="text-sm font-semibold text-slate-700">{category}</p>
+                        <span className="text-sm font-medium text-slate-500">{percentage}%</span>
                       </div>
-                      <div className="mt-2 h-2 rounded-full bg-gray-100">
+                      <div className="mt-2 h-2 rounded-full bg-slate-100">
                         <div
-                          className="h-2 rounded-full bg-red-500"
+                          className="h-2 rounded-full bg-slate-600"
                           style={{ width: `${percentage}%` }}
                         />
                       </div>
                     </div>
-                    <span className="text-sm font-semibold text-gray-600">
+                    <span className="text-sm font-semibold text-slate-600">
                       {addThousandSeparator(amount.toFixed(2))}
                     </span>
                   </div>
                 ))
               ) : (
-                <div className="flex h-full items-center justify-center rounded-lg border border-dashed border-gray-200 bg-gray-50/60 p-6 text-center text-sm text-gray-400">
+                <div className="flex h-full items-center justify-center rounded-lg border border-dashed border-slate-200 bg-slate-50/60 p-6 text-center text-sm text-slate-400">
                   No expense activity recorded in the last 30 days.
                 </div>
               )}
             </div>
 
             {expenseTotal30Days > 0 && (
-              <div className="mt-6 rounded-lg bg-gray-50 px-4 py-3 text-sm text-gray-600">
-                <p className="font-medium text-gray-700">Average spend</p>
+              <div className="mt-6 rounded-lg bg-slate-50 px-4 py-3 text-sm text-slate-600">
+                <p className="font-medium text-slate-700">Average spend</p>
                 <p>
                   {addThousandSeparator(avgExpense30Days.toFixed(2))} per transaction
                 </p>
@@ -164,47 +164,47 @@ const Home = () => {
             )}
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 col-span-1 md:col-span-1 flex flex-col">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 col-span-1 md:col-span-1 flex flex-col">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="text-lg font-semibold text-gray-800">Income Momentum</h3>
-                <p className="text-xs text-gray-500">Last 60 days inflow</p>
+                <h3 className="text-lg font-semibold text-slate-800">Income Momentum</h3>
+                <p className="text-xs text-slate-500">Last 60 days inflow</p>
               </div>
-              <span className="inline-flex items-center gap-1 rounded-full bg-green-500/10 px-3 py-1 text-[11px] font-medium text-green-600">
+              <span className="inline-flex items-center gap-1 rounded-full bg-slate-500/10 px-3 py-1 text-[11px] font-medium text-slate-600">
                 {incomeCount60Days} deposits
               </span>
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center justify-between rounded-lg bg-green-500/10 px-4 py-3">
+              <div className="flex items-center justify-between rounded-lg bg-slate-500/10 px-4 py-3">
                 <div className="text-xs font-medium uppercase tracking-wide text-green-700">Total Inflow</div>
                 <div className="text-base font-semibold text-green-700">
                   {addThousandSeparator(incomeTotal60Days.toFixed(2))}
                 </div>
               </div>
 
-              <div className="rounded-lg border border-gray-100 bg-gray-50/70 px-4 py-3 text-sm text-gray-600">
-                <p className="font-medium text-gray-700">Average per transaction</p>
+              <div className="rounded-lg border border-slate-100 bg-slate-50/70 px-4 py-3 text-sm text-slate-600">
+                <p className="font-medium text-slate-700">Average per transaction</p>
                 <p>{addThousandSeparator(avgIncome60Days.toFixed(2))}</p>
               </div>
 
               {latestIncome && (
-                <div className="rounded-lg border border-gray-100 px-4 py-3">
-                  <p className="text-xs font-medium uppercase tracking-wide text-gray-500">Most recent deposit</p>
+                <div className="rounded-lg border border-slate-100 px-4 py-3">
+                  <p className="text-xs font-medium uppercase tracking-wide text-slate-500">Most recent deposit</p>
                   <div className="mt-2 flex items-start justify-between">
                     <div>
-                      <p className="text-sm font-semibold text-gray-800">{latestIncome.source || 'Income'}</p>
+                      <p className="text-sm font-semibold text-slate-800">{latestIncome.source || 'Income'}</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <p className="text-xs text-gray-500">{formatDate(latestIncome.created_at)}</p>
+                        <p className="text-xs text-slate-500">{formatDate(latestIncome.created_at)}</p>
                         {latestIncome.to && (
                           <>
-                            <span className="text-xs text-gray-400">•</span>
-                            <p className="text-xs text-green-600 font-medium">To: {latestIncome.to}</p>
+                            <span className="text-xs text-slate-400">•</span>
+                            <p className="text-xs text-slate-600 font-medium">To: {latestIncome.to}</p>
                           </>
                         )}
                       </div>
                     </div>
-                    <span className="rounded-full bg-green-500/10 px-3 py-1 text-xs font-semibold text-green-600">
+                    <span className="rounded-full bg-slate-500/10 px-3 py-1 text-xs font-semibold text-slate-600">
                       +{addThousandSeparator(Number(latestIncome.amount || 0).toFixed(2))}
                     </span>
                   </div>

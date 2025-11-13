@@ -8,7 +8,7 @@ import {
 } from 'recharts'
 import { addThousandSeparator } from '../../utils/helper'
 
-const COLORS = ['#875CF5', '#22C55E', '#EF4444', '#6366F1', '#F97316']
+const COLORS = ['#475569', '#64748b', '#475569', '#94a3b8', '#cbd5e1']
 
 const CustomTooltip = ({ active, payload }) => {
   if (active && payload && payload.length) {
@@ -16,9 +16,9 @@ const CustomTooltip = ({ active, payload }) => {
     const percentage = item.percentage
 
     return (
-      <div className="rounded-lg bg-white/95 shadow-xl border border-gray-100 px-3 py-2">
-        <p className="text-sm font-medium text-gray-700">{name}</p>
-        <p className="text-xs text-gray-500">{percentage}% • {addThousandSeparator(value)}</p>
+      <div className="rounded-lg bg-white/95 shadow-xl border border-slate-100 px-3 py-2">
+        <p className="text-sm font-medium text-slate-700">{name}</p>
+        <p className="text-xs text-slate-500">{percentage}% • {addThousandSeparator(value)}</p>
       </div>
     )
   }
@@ -43,7 +43,7 @@ const PieChart = ({ value = [] }) => {
 
   if (sanitized.length === 0 || total === 0) {
     return (
-      <div className="flex flex-col items-center justify-center gap-2 text-gray-400 text-sm">
+      <div className="flex flex-col items-center justify-center gap-2 text-slate-400 text-sm">
         <span>No data to display</span>
         <span className="text-xs">Start tracking income and expenses to see insights.</span>
       </div>
@@ -77,10 +77,10 @@ const PieChart = ({ value = [] }) => {
         </ResponsiveContainer>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+          <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
             Total Balance
           </span>
-          <span className="text-lg font-semibold text-gray-800">
+          <span className="text-lg font-semibold text-slate-800">
             {addThousandSeparator(total)}
           </span>
         </div>
@@ -90,15 +90,15 @@ const PieChart = ({ value = [] }) => {
         {pieData.map((item, index) => (
           <div
             key={item.name}
-            className="flex items-center gap-3 rounded-lg border border-gray-100 bg-gray-50/60 px-3 py-2"
+            className="flex items-center gap-3 rounded-lg border border-slate-100 bg-slate-50/60 px-3 py-2"
           >
             <span
               className="h-3 w-3 rounded-full"
               style={{ backgroundColor: COLORS[index % COLORS.length] }}
             />
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-700">{item.name}</p>
-              <p className="text-xs text-gray-500">
+              <p className="text-sm font-medium text-slate-700">{item.name}</p>
+              <p className="text-xs text-slate-500">
                 {item.percentage}% • {addThousandSeparator(item.value)}
               </p>
             </div>

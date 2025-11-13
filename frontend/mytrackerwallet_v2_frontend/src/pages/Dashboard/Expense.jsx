@@ -217,12 +217,12 @@ const Expense = () => {
         {/* Header Section */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">Expense Management</h1>
-            <p className="text-sm text-gray-500 mt-1">Track and manage your expenses</p>
+            <h1 className="text-2xl font-bold text-slate-800">Expense Management</h1>
+            <p className="text-sm text-slate-500 mt-1">Track and manage your expenses</p>
           </div>
           <button
             onClick={handleDownloadExcel}
-            className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200 shadow-sm"
+            className="flex items-center gap-2 px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors duration-200 shadow-sm"
             disabled={expenseCount === 0}
           >
             <LuDownload className="text-lg" />
@@ -236,7 +236,7 @@ const Expense = () => {
             icon={<LuTrendingDown />}
             label="Total Expense"
             value={addThousandSeparator(totalExpense.toFixed(2))}
-            color="bg-red-500"
+            color="bg-slate-500"
           />
           <InfoCard
             icon={<LuDollarSign />}
@@ -248,20 +248,20 @@ const Expense = () => {
             icon={<LuCalendar />}
             label="Average Expense"
             value={addThousandSeparator(averageExpense.toFixed(2))}
-            color="bg-orange-500"
+            color="bg-slate-400"
           />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Add Expense Form */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Add New Expense</h2>
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">Add New Expense</h2>
             {destinations.length === 0 ? (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
-                <p className="text-sm text-yellow-800 font-medium mb-2">
+              <div className="bg-slate-100 border border-slate-300 rounded-lg p-4 mb-4">
+                <p className="text-sm text-slate-700 font-medium mb-2">
                   No income destinations found
                 </p>
-                <p className="text-xs text-yellow-700">
+                <p className="text-xs text-slate-600">
                   Please add at least one destination in the <strong>Income</strong> page before adding expenses. Expenses must use a source from your income destinations.
                 </p>
               </div>
@@ -269,18 +269,18 @@ const Expense = () => {
             <form onSubmit={handleSubmit} className="space-y-4" style={{ opacity: destinations.length === 0 ? 0.5 : 1, pointerEvents: destinations.length === 0 ? 'none' : 'auto' }}>
               {/* Icon Picker */}
               <div className="relative emoji-picker-wrapper">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
                   Icon
                 </label>
                 <div className="flex items-center gap-3">
                   <button
                     type="button"
                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                    className="w-16 h-16 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-3xl transition-colors duration-200 border-2 border-gray-200"
+                    className="w-16 h-16 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-3xl transition-colors duration-200 border-2 border-slate-200"
                   >
                     {formData.icon}
                   </button>
-                  <p className="text-sm text-gray-500">Click to change icon</p>
+                  <p className="text-sm text-slate-500">Click to change icon</p>
                 </div>
                 {showEmojiPicker && (
                   <div className="absolute z-10 mt-2 emoji-picker-wrapper">
@@ -295,8 +295,8 @@ const Expense = () => {
 
               {/* Category Input */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Category <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Category <span className="text-slate-600">*</span>
                 </label>
                 <input
                   type="text"
@@ -304,15 +304,15 @@ const Expense = () => {
                   value={formData.category}
                   onChange={handleInputChange}
                   placeholder="e.g., Food, Transport, Shopping, Bills"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all duration-200"
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none transition-all duration-200"
                   required
                 />
               </div>
 
               {/* Amount Input */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Amount <span className="text-red-500">*</span>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Amount <span className="text-slate-600">*</span>
                 </label>
                 <input
                   type="number"
@@ -322,22 +322,22 @@ const Expense = () => {
                   placeholder="0.00"
                   step="0.01"
                   min="0"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all duration-200"
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none transition-all duration-200"
                   required
                 />
               </div>
 
               {/* Source Input */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Source <span className="text-red-500">*</span>
-                  <span className="text-xs text-gray-500 ml-2">(from Income destinations)</span>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Source <span className="text-slate-600">*</span>
+                  <span className="text-xs text-slate-500 ml-2">(from Income destinations)</span>
                 </label>
                 <select
                   name="source"
                   value={formData.source}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all duration-200"
+                  className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-500 focus:border-transparent outline-none transition-all duration-200"
                   required
                   disabled={destinations.length === 0}
                 >
@@ -354,7 +354,7 @@ const Expense = () => {
               <button
                 type="submit"
                 disabled={submitting || destinations.length === 0}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200 shadow-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors duration-200 shadow-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <LuPlus className="text-lg" />
                 <span>{submitting ? 'Adding...' : 'Add Expense'}</span>
@@ -363,46 +363,46 @@ const Expense = () => {
           </div>
 
           {/* Expense List */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">
               Expense History ({expenseCount})
             </h2>
             
             {loading ? (
               <div className="flex items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-500"></div>
               </div>
             ) : expenses.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-                  <LuTrendingDown className="text-2xl text-gray-400" />
+                <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+                  <LuTrendingDown className="text-2xl text-slate-400" />
                 </div>
-                <p className="text-gray-500 font-medium">No expense records yet</p>
-                <p className="text-sm text-gray-400 mt-1">Add your first expense to get started</p>
+                <p className="text-slate-600 font-medium">No expense records yet</p>
+                <p className="text-sm text-slate-500 mt-1">Add your first expense to get started</p>
               </div>
             ) : (
               <div className="space-y-3 max-h-[600px] overflow-y-auto">
                 {expenses.map((expense) => (
                   <div
                     key={expense.id}
-                    className="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50 transition-colors duration-200 border border-gray-100"
+                    className="flex items-center justify-between p-4 rounded-lg hover:bg-slate-50 transition-colors duration-200 border border-slate-200"
                   >
                     <div className="flex items-center gap-4 flex-1 min-w-0">
-                      <div className="w-12 h-12 rounded-lg bg-red-100 flex items-center justify-center text-2xl shrink-0">
+                      <div className="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center text-2xl shrink-0">
                         {expense.icon || '💸'}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-gray-800 truncate">
+                        <p className="font-semibold text-slate-800 truncate">
                           {expense.category}
                         </p>
                         <div className="flex items-center gap-2 mt-1">
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-slate-500">
                             {formatDateTime(expense.created_at)}
                           </p>
                           {expense.source && (
                             <>
-                              <span className="text-xs text-gray-400">•</span>
-                              <p className="text-xs text-red-600 font-medium">
+                              <span className="text-xs text-slate-400">•</span>
+                              <p className="text-xs text-slate-600 font-medium">
                                 From: {expense.source}
                               </p>
                             </>
@@ -411,12 +411,12 @@ const Expense = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
-                      <span className="text-base font-semibold text-red-600 whitespace-nowrap">
+                      <span className="text-base font-semibold text-slate-700 whitespace-nowrap">
                         -{addThousandSeparator(Number(expense.amount || 0).toFixed(2))}
                       </span>
                       <button
                         onClick={() => handleDelete(expense.id)}
-                        className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors duration-200"
+                        className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors duration-200"
                         title="Delete expense"
                       >
                         <LuTrash2 className="text-lg" />
