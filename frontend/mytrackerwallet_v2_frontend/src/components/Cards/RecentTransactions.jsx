@@ -4,12 +4,21 @@ import { LuArrowRight, LuTrendingUp, LuTrendingDown } from 'react-icons/lu'
 
 const RecentTransactions = ({ transactions = [], seeMore }) => {
   const getTransactionType = (transaction) => {
-    // If it has 'source', it's an income; if it has 'category', it's an expense
+    // Use the type field from backend, or fallback to checking source/category
+    if (transaction.type) {
+      return transaction.type
+    }
+    // Fallback: If it has 'source', it's an income; if it has 'category', it's an expense
     return transaction.source ? 'income' : 'expense'
   }
 
   const getTransactionLabel = (transaction) => {
-    return transaction.source || transaction.category || 'Transaction'
+    const type = getTransactionType(transaction)
+    if (type === 'expense') {
+      return transaction.category || 'Expense'
+    } else {
+      return transaction.source || 'Income'
+    }
   }
 
   const formatDate = (dateString) => {

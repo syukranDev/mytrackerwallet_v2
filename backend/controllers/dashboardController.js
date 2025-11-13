@@ -64,13 +64,85 @@ exports.getDashboardData = async (req, res) => {
 
         const latestIncome = last60daysincomeTransactions[0] || null
 
-        const recentTransactions = [...last60daysincomeTransactions, ...last30DaysExpenseTransactions]
-            .map((transaction) => ({
-                ...transaction,
-                type: transaction.source ? 'income' : 'expense'
-            }))
+        // Mark income transactions with a type field
+        const incomeTransactionsWithType = last60daysincomeTransactions.map((transaction) => ({
+            ...transaction,
+            type: 'income'
+        }))
+        
+        // Mark expense transactions with a type field
+        const expenseTransactionsWithType = last30DaysExpenseTransactions.map((transaction) => ({
+            ...transaction,
+            type: 'expense'
+        }))
+
+        const recentTransactions = [...incomeTransactionsWithType, ...expenseTransactionsWithType]
             .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
             .slice(0, 5)
+
+        // Calculate balance per source
+        // Get all income destinations (LOVs) for this user
+        const allIncomeDestinations = await db.incomeDestinations.findAll({
+            where: { userId },
+            order: [['name', 'ASC']]
+        })
+
+        // Get all income transactions to calculate income per source
+        const allIncomeTransactionsRaw = await db.incomes.findAll({
+            where: { userId },
+            order: [['created_at', 'DESC']]
+        })
+
+        // Get all expense transactions to calculate expenses per source
+        const allExpenseTransactionsRaw = await db.expenses.findAll({
+            where: { userId },
+            order: [['created_at', 'DESC']]
+        })
+
+        // Calculate income per LOV - sum all income transactions where 'to' field matches the LOV name
+        const incomeByLOV = {}
+        allIncomeTransactionsRaw.forEach((transaction) => {
+            const plain = transaction.get({ plain: true })
+            const to = (plain.to || '').trim()
+            if (to) {
+                const amount = toNumber(plain.amount)
+                incomeByLOV[to] = (incomeByLOV[to] || 0) + amount
+            }
+        })
+
+        // Calculate expenses per LOV - sum all expense transactions where 'source' field matches the LOV name
+        const expenseByLOV = {}
+        allExpenseTransactionsRaw.forEach((transaction) => {
+            const plain = transaction.get({ plain: true })
+            const source = (plain.source || '').trim()
+            if (source) {
+                const amount = toNumber(plain.amount)
+                expenseByLOV[source] = (expenseByLOV[source] || 0) + amount
+            }
+        })
+
+        // Calculate balance per LOV (income - expenses)
+        // Include all income destinations, even if they have no transactions
+        const sourceBalances = []
+        
+        allIncomeDestinations.forEach((destination) => {
+            const plain = destination.get({ plain: true })
+            const lovName = (plain.name || '').trim()
+            // Match income by 'to' field and expense by 'source' field
+            const income = incomeByLOV[lovName] || 0
+            const expense = expenseByLOV[lovName] || 0
+            const balance = income - expense
+            
+            sourceBalances.push({
+                source: lovName,
+                income: Number(income.toFixed(2)),
+                expense: Number(expense.toFixed(2)),
+                balance: Number(balance.toFixed(2))
+            })
+        })
+
+        // Sort by balance descending
+        sourceBalances.sort((a, b) => b.balance - a.balance)
 
         res.json({
             totalBalance: Number((totalIncomeSum - totalExpenseSum).toFixed(2)),
@@ -90,7 +162,8 @@ exports.getDashboardData = async (req, res) => {
                 latest: latestIncome,
                 transactions: last60daysincomeTransactions
             },
-            recentTransactions
+            recentTransactions,
+            sourceBalances
         })
     } catch (error) {
         console.error(error)

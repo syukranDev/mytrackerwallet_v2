@@ -88,7 +88,7 @@ const Home = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
           <RecentTransactions
             transactions={dashboardData?.recentTransactions || []}
-            seeMore={() => navigate('/expense')}
+            seeMore={() => navigate('/transactions')}
           />
           <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 col-span-1 md:col-span-1 flex flex-col">
             <div className="flex items-start justify-between mb-4">
@@ -209,6 +209,43 @@ const Home = () => {
                       +{addThousandSeparator(Number(latestIncome.amount || 0).toFixed(2))}
                     </span>
                   </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 col-span-1 md:col-span-1 flex flex-col">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-slate-800">Source Balance</h3>
+                <p className="text-xs text-slate-500">Balance per income source</p>
+              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-[11px] font-medium text-primary">
+                {dashboardData?.sourceBalances?.length || 0} sources
+              </span>
+            </div>
+
+            <div className="space-y-3 flex-1 overflow-y-auto max-h-[400px]">
+              {dashboardData?.sourceBalances && dashboardData.sourceBalances.length > 0 ? (
+                dashboardData.sourceBalances.map(({ source, balance }) => (
+                  <div key={source} className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-slate-50 transition-colors">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-slate-800 truncate">{source}</p>
+                    </div>
+                    <div className="ml-4">
+                      <span className={`text-base font-semibold px-3 py-1 rounded-md ${
+                        balance >= 0 
+                          ? 'text-slate-600 bg-slate-500/10' 
+                          : 'text-red-600 bg-red-50'
+                      }`}>
+                        {balance >= 0 ? '+' : ''}{addThousandSeparator(balance.toFixed(2))}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="flex h-full items-center justify-center rounded-lg border border-dashed border-slate-200 bg-slate-50/60 p-6 text-center text-sm text-slate-400">
+                  No source data available. Add income sources to see balances.
                 </div>
               )}
             </div>

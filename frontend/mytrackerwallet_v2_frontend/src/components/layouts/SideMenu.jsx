@@ -8,7 +8,8 @@ import {
     LuLayoutDashboard,
     LuHandCoins,
     LuWalletCards,
-    LuLogOut
+    LuLogOut,
+    LuList
 } from 'react-icons/lu'
 
 const SideMenu = ({ activeMenu }) => {
@@ -20,6 +21,7 @@ const SideMenu = ({ activeMenu }) => {
         'LuLayoutDashboard': LuLayoutDashboard,
         'LuHandCoins': LuHandCoins,
         'LuWalletCards': LuWalletCards,
+        'LuList': LuList,
         'LuLogOut': LuLogOut
     }
 
@@ -46,7 +48,7 @@ const SideMenu = ({ activeMenu }) => {
     const LogoutIcon = logoutItem ? iconMap[logoutItem.icon] : null
 
     return (
-        <div className='w-64 h-[calc(100vh-61px)] bg-white border-r border-slate-200/50 p-5 sticky top-[61px] z-20 overflow-y-auto flex flex-col'>
+        <div className='w-80 h-[calc(100vh-61px)] bg-white border-r border-slate-200/50 p-5 sticky top-[61px] z-20 overflow-y-auto flex flex-col'>
             <div className='flex flex-col items-center gap-3 mt-3 mb-10'>
                 { user?.profileImageUrl ? (
                     <img 

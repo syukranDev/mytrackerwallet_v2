@@ -23,6 +23,7 @@ app.use('/api/v1/income', require('./routes/incomeRoutes.js'))
 app.use('/api/v1/income/destinations', require('./routes/incomeDestinationRoutes.js'))
 app.use('/api/v1/expense', require('./routes/expenseRoutes.js'))
 app.use('/api/v1/dashboard', require('./routes/dashboardRoutes.js'))
+app.use('/api/v1/transactions', require('./routes/transactionRoutes.js'))
 
 // Serve uploaded images folder
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))

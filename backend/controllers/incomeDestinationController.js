@@ -48,6 +48,44 @@ exports.deleteDestination = async (req, res) => {
     const userId = req.token.id
     const { id } = req.params
     try {
+
+        // First, get the destination to check its name
+        const destination = await db.incomeDestinations.findOne({ 
+            where: { userId, id } 
+        })
+        
+        if (!destination) {
+            return res.status(404).json({ message: 'Destination not found' })
+        }
+        
+        const destinationName = destination.name
+        
+        // Check if this destination is used in any income transactions (to field)
+        const incomeCount = await db.incomes.count({
+            where: {
+                userId,
+                to: destinationName
+            }
+        })
+        
+        // Check if this destination is used in any expense transactions (source field)
+        const expenseCount = await db.expenses.count({
+            where: {
+                userId,
+                source: destinationName
+            }
+        })
+        
+        if (incomeCount > 0 || expenseCount > 0) {
+            const usedIn = []
+            if (incomeCount > 0) usedIn.push(`${incomeCount} income transaction(s)`)
+            if (expenseCount > 0) usedIn.push(`${expenseCount} expense transaction(s)`)
+            
+            return res.status(400).json({ 
+                message: `Cannot delete destination "${destinationName}" because it is being used in ${usedIn.join(' and ')}. Please delete or update those transactions first.` 
+            })
+        }
+        
         const result = await db.incomeDestinations.destroy({ 
             where: { userId, id } 
         })
@@ -73,11 +111,54 @@ exports.updateDestination = async (req, res) => {
     }
 
     try {
-        // Check if another destination with the same name exists
+        // First, get the current destination to check its old name
+        const currentDestination = await db.incomeDestinations.findOne({ 
+            where: { userId, id } 
+        })
+        
+        if (!currentDestination) {
+            return res.status(404).json({ message: 'Destination not found' })
+        }
+        
+        const oldName = currentDestination.name
+        const newName = name.trim()
+        
+        // If the name hasn't changed, allow the update
+        if (oldName === newName) {
+            const destination = await db.incomeDestinations.findOne({ where: { id } })
+            return res.status(200).json({ destination })
+        }
+        
+        // Check if the old name is used in any transactions
+        const incomeCount = await db.incomes.count({
+            where: {
+                userId,
+                to: oldName
+            }
+        })
+        
+        const expenseCount = await db.expenses.count({
+            where: {
+                userId,
+                source: oldName
+            }
+        })
+        
+        if (incomeCount > 0 || expenseCount > 0) {
+            const usedIn = []
+            if (incomeCount > 0) usedIn.push(`${incomeCount} income transaction(s)`)
+            if (expenseCount > 0) usedIn.push(`${expenseCount} expense transaction(s)`)
+            
+            return res.status(400).json({ 
+                message: `Cannot edit destination "${oldName}" because it is being used in ${usedIn.join(' and ')}. Please delete or update those transactions first.` 
+            })
+        }
+        
+        // Check if another destination with the new name exists
         const existing = await db.incomeDestinations.findOne({ 
             where: { 
                 userId, 
-                name: name.trim(),
+                name: newName,
                 id: { [Op.ne]: id }
             } 
         })
@@ -87,7 +168,7 @@ exports.updateDestination = async (req, res) => {
         }
 
         const [updated] = await db.incomeDestinations.update(
-            { name: name.trim() },
+            { name: newName },
             { where: { userId, id } }
         )
         
