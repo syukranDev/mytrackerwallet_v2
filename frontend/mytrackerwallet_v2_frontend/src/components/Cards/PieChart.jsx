@@ -26,7 +26,8 @@ const CustomTooltip = ({ active, payload }) => {
   return null
 }
 
-const PieChart = ({ value = [] }) => {
+const PieChart = ({ value = [], balance = 0 }) => {
+  // Include all segments including Balance
   const sanitized = value
     .filter((item) => typeof item?.value === 'number' && !Number.isNaN(item.value))
     .map((item) => ({
@@ -40,6 +41,9 @@ const PieChart = ({ value = [] }) => {
     ...item,
     percentage: total > 0 ? Math.round((item.value / total) * 100) : 0
   }))
+
+  // Use the balance prop for the center display (this is the actual balance: Income - Expense)
+  const displayBalance = typeof balance === 'number' ? Number(balance) : 0
 
   if (sanitized.length === 0 || total === 0) {
     return (
@@ -81,7 +85,7 @@ const PieChart = ({ value = [] }) => {
             Total Balance
           </span>
           <span className="text-lg font-semibold text-slate-800">
-            {addThousandSeparator(total)}
+            {addThousandSeparator(Number(displayBalance).toFixed(2))}
           </span>
         </div>
       </div>

@@ -108,6 +108,7 @@ const Home = () => {
                   { name: 'Expense', value: totalExpense },
                   { name: 'Balance', value: totalBalance },
                 ]}
+                balance={totalBalance}
               />
             </div>
           </div>
