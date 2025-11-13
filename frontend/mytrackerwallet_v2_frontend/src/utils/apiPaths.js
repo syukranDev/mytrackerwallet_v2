@@ -12,13 +12,19 @@ export const API_PATH = {
     INCOME: {
         ADD_INCOME: '/api/v1/income/addIncome',
         GET_INCOME_DATA: '/api/v1/income/getAllIncome',
-        DELETE_INCOME: '/api/v1/income/deleteIncome/:id',
+        DELETE_INCOME: (id) => `/api/v1/income/deleteIncome/${id}`,
         DOWNLOAD_INCOME_EXCEL: '/api/v1/income/downloadIncomeExcel',
+        DESTINATIONS: {
+            GET_ALL: '/api/v1/income/destinations/getAllDestinations',
+            ADD: '/api/v1/income/destinations/addDestination',
+            UPDATE: (id) => `/api/v1/income/destinations/updateDestination/${id}`,
+            DELETE: (id) => `/api/v1/income/destinations/deleteDestination/${id}`,
+        },
     },
     EXPENSE: {
         ADD_EXPENSE: '/api/v1/expense/addExpense',
         GET_EXPENSE_DATA: '/api/v1/expense/getAllExpense',
-        DELETE_EXPENSE: (incomeId) => `/api/v1/expense/deleteExpense/${incomeId}`,
+        DELETE_EXPENSE: (id) => `/api/v1/expense/deleteExpense/${id}`,
         DOWNLOAD_EXPENSE_EXCEL: '/api/v1/expense/downloadExpenseExcel',
     },
     IMAGE: {

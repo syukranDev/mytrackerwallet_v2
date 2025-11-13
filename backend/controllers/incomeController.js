@@ -3,14 +3,14 @@ const xlsx = require('xlsx')
 
 exports.addIncome = async (req, res) => {
     const userId = req.token.id
-    const { icon, amount, source } = req.body
+    const { icon, amount, source, to } = req.body
 
     if (!userId || !icon || !amount || !source) {
         return res.status(400).json({ message: 'All fields are required' })
     }
 
     try {
-        const income = await db.incomes.create({ userId, icon, amount, source })
+        const income = await db.incomes.create({ userId, icon, amount, source, to: to || null })
         res.status(201).json({ income })
     } catch (error) {
         console.error(error)
@@ -50,6 +50,7 @@ exports.downloadIncomeExcel = async (req, res) => {
             icon: income.icon,
             amount: income.amount,
             source: income.source,
+            to: income.to,
             created_at: income.created_at,
             updated_at: income.updated_at
         }))

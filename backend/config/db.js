@@ -32,6 +32,7 @@ db.sequelize = sequelize;
 db.expenses = require('../models/expenses.js')(sequelize, Sequelize);
 db.incomes = require('../models/incomes.js')(sequelize, Sequelize);
 db.users = require('../models/users.js')(sequelize, Sequelize);
+db.incomeDestinations = require('../models/incomeDestinations.js')(sequelize, Sequelize);
 
 
 // Test database connection and sync models

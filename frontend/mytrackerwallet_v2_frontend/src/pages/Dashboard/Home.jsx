@@ -194,7 +194,15 @@ const Home = () => {
                   <div className="mt-2 flex items-start justify-between">
                     <div>
                       <p className="text-sm font-semibold text-gray-800">{latestIncome.source || 'Income'}</p>
-                      <p className="text-xs text-gray-500">{formatDate(latestIncome.created_at)}</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <p className="text-xs text-gray-500">{formatDate(latestIncome.created_at)}</p>
+                        {latestIncome.to && (
+                          <>
+                            <span className="text-xs text-gray-400">•</span>
+                            <p className="text-xs text-green-600 font-medium">To: {latestIncome.to}</p>
+                          </>
+                        )}
+                      </div>
                     </div>
                     <span className="rounded-full bg-green-500/10 px-3 py-1 text-xs font-semibold text-green-600">
                       +{addThousandSeparator(Number(latestIncome.amount || 0).toFixed(2))}

@@ -20,6 +20,7 @@ app.use(express.json())
 
 app.use('/api/v1/auth', require('./routes/authRoutes.js'))
 app.use('/api/v1/income', require('./routes/incomeRoutes.js'))
+app.use('/api/v1/income/destinations', require('./routes/incomeDestinationRoutes.js'))
 app.use('/api/v1/expense', require('./routes/expenseRoutes.js'))
 app.use('/api/v1/dashboard', require('./routes/dashboardRoutes.js'))
 

@@ -63,9 +63,17 @@ const RecentTransactions = ({ transactions = [], seeMore }) => {
                     <p className="font-medium text-gray-800 truncate">
                       {getTransactionLabel(transaction)}
                     </p>
-                    <p className="text-sm text-gray-500">
-                      {formatDate(transaction.created_at)}
-                    </p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <p className="text-sm text-gray-500">
+                        {formatDate(transaction.created_at)}
+                      </p>
+                      {isIncome && transaction.to && (
+                        <>
+                          <span className="text-xs text-gray-400">•</span>
+                          <p className="text-xs text-green-600 font-medium">To: {transaction.to}</p>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
 
